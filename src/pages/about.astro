@@ -1,0 +1,134 @@
+---
+import Frame from '../layouts/Frame.astro';
+import Honeycomb from '../components/Honeycomb.astro';
+import { about } from '../config/about';
+import { site } from '../config/site';
+
+const sections = [
+  { no: '01', title: 'Profile' },
+  { no: '02', title: 'Now' },
+  { no: '03', title: 'Stack' },
+  { no: '04', title: 'Self-hosted' },
+  { no: '05', title: 'Specs' },
+];
+const head = (i: number) => sections[i];
+
+/** Split a paragraph into text and [text](url) links. */
+const inline = (text: string) =>
+  text.split(/(\[[^\]]+\]\([^)]+\))/g).map((part) => {
+    const m = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+    return m ? { text: m[1], href: m[2] } : { text: part };
+  });
+---
+
+<Frame title={`About · ${site.name}`} page="about" divider>
+  <span slot="status">{site.location}<span class="status__clock" data-clock={about.timeZone}></span></span>
+
+  <section class="about-panel">
+    <div class="about">
+      <article class="section">
+        <h2 class="section__head"><span class="section__no">{head(0).no}</span><span class="section__title">{head(0).title}</span><span class="section__rule"></span></h2>
+        <div class="prose">
+          {about.profile.map((p) => <p>{inline(p).map((part) => (part.href ? <a href={part.href}>{part.text}</a> : part.text))}</p>)}
+        </div>
+      </article>
+
+      <article class="section">
+        <h2 class="section__head"><span class="section__no">{head(1).no}</span><span class="section__title">{head(1).title}</span><span class="section__rule"></span></h2>
+        <ul class="now">
+          {about.now.map((item) => <li class="now__item"><span>{inline(item).map((part) => (part.href ? <a href={part.href}>{part.text}</a> : part.text))}</span></li>)}
+        </ul>
+      </article>
+
+      <article class="section">
+        <h2 class="section__head"><span class="section__no">{head(2).no}</span><span class="section__title">{head(2).title}</span><span class="section__rule"></span></h2>
+        <ul class="tags">{about.stack.map((tag) => <li class="tag">{tag}</li>)}</ul>
+      </article>
+
+      <article class="section">
+        <h2 class="section__head"><span class="section__no">{head(3).no}</span><span class="section__title">{head(3).title}</span><span class="section__rule"></span></h2>
+        <ul class="services">{about.selfHosted.map((name) => <li class="service"><span class="service__dot"></span>{name}</li>)}</ul>
+      </article>
+
+
+
+      <article class="section section--specs">
+        <h2 class="section__head"><span class="section__no">{head(4).no}</span><span class="section__title">{head(4).title}</span><span class="section__rule"></span></h2>
+        <dl class="readout readout--inline">
+          <dt class="readout__key">Local time</dt><dd class="readout__val" data-clock={about.timeZone} data-seconds>—</dd>
+          {about.specs.map((s) => <><dt class="readout__key">{s.key}</dt><dd class="readout__val">{s.value}</dd></>)}
+          <dt class="readout__key">Uptime</dt><dd class="readout__val" data-uptime={about.uptimeSince}>—</dd>
+          <dt class="readout__key">Weather</dt><dd class="readout__val" data-weather>—</dd>
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  <section class="field">
+    <Honeycomb class="honeycomb--top-right" cluster="top-right" strokeOpacity={0.28} fillOpacity={0.16} width={264} height={230} viewBox="280 0 264 230" />
+    <Honeycomb class="honeycomb--bottom-left" cluster="bottom-left" strokeOpacity={0.28} fillOpacity={0.16} width={220} height={238} viewBox="0 558 220 238" />
+    <div class="hud">
+      <div class="hud__label">{head(4).no} · {head(4).title}</div>
+      <dl class="readout">
+        <dt class="readout__key">Local time</dt><dd class="readout__val" data-clock={about.timeZone} data-seconds>—</dd>
+        {about.specs.map((s) => <><dt class="readout__key">{s.key}</dt><dd class="readout__val">{s.value}</dd></>)}
+        <dt class="readout__key">Uptime</dt><dd class="readout__val" data-uptime={about.uptimeSince}>—</dd>
+        <dt class="readout__key">Weather</dt><dd class="readout__val" data-weather>—</dd>
+      </dl>
+    </div>
+    <div class="coords">{site.coordinates}</div>
+  </section>
+</Frame>
+
+<script>
+  import { about } from '../config/about';
+
+  // Live local time for every [data-clock] element (time zone in the attribute).
+  const clocks = [...document.querySelectorAll<HTMLElement>('[data-clock]')];
+  const tick = () => {
+    const now = new Date();
+    for (const el of clocks) {
+      const withSeconds = el.hasAttribute('data-seconds');
+      const time = now.toLocaleTimeString('en-GB', { timeZone: el.dataset.clock, hour: '2-digit', minute: '2-digit', ...(withSeconds ? { second: '2-digit' } : {}) });
+      el.textContent = el.classList.contains('status__clock') ? ` · ${time}` : time;
+    }
+  };
+  if (clocks.length) {
+    tick();
+    setInterval(tick, 1000);
+  }
+
+  // Uptime: whole days since the configured date.
+  for (const el of document.querySelectorAll<HTMLElement>('[data-uptime]')) {
+    const since = Date.parse(el.dataset.uptime ?? '');
+    if (Number.isNaN(since)) continue;
+    const days = Math.max(0, Math.floor((Date.now() - since) / 86_400_000));
+    el.textContent = `${days} ${days === 1 ? 'day' : 'days'}`;
+  }
+
+  // Weather: current temperature and sky from Open-Meteo (WMO weather codes).
+  const sky = (code: number): string => {
+    if (code === 0) return 'Clear';
+    if (code <= 2) return 'Partly cloudy';
+    if (code === 3) return 'Overcast';
+    if (code <= 48) return 'Fog';
+    if (code <= 57) return 'Drizzle';
+    if (code <= 67) return 'Rain';
+    if (code <= 77) return 'Snow';
+    if (code <= 82) return 'Showers';
+    if (code <= 86) return 'Snow showers';
+    return 'Thunderstorm';
+  };
+  const weatherCells = [...document.querySelectorAll<HTMLElement>('[data-weather]')];
+  if (weatherCells.length) {
+    const { latitude, longitude } = about.weather;
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weather_code`;
+    fetch(url)
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`Open-Meteo ${res.status}`))))
+      .then((data: { current: { temperature_2m: number; weather_code: number } }) => {
+        const text = `${Math.round(data.current.temperature_2m)} °C · ${sky(data.current.weather_code)}`;
+        for (const el of weatherCells) el.textContent = text;
+      })
+      .catch((err) => console.warn('[about] weather unavailable:', err));
+  }
+</script>

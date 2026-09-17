@@ -1,0 +1,63 @@
+---
+// Honeycomb clusters: pointy-top hexagons, R = 40, on a honeycomb grid.
+// Polygon coordinates are copied verbatim from reference/Main.dc.html
+// (the 544×796 right-panel coordinate space); `viewBox` picks the window
+// that is shown, so a cluster can hang off a panel corner at any panel size.
+const CLUSTERS = {
+  'top-right': {
+    outline: [
+      '455.7,-32.0 490.3,-12.0 490.3,28.0 455.7,48.0 421.1,28.0 421.1,-12.0',
+      '525.0,-32.0 559.6,-12.0 559.6,28.0 525.0,48.0 490.3,28.0 490.3,-12.0',
+      '421.1,28.0 455.7,48.0 455.7,88.0 421.1,108.0 386.4,88.0 386.4,48.0',
+      '317.1,88.0 351.8,108.0 351.8,148.0 317.1,168.0 282.5,148.0 282.5,108.0',
+      '386.4,88.0 421.1,108.0 421.1,148.0 386.4,168.0 351.8,148.0 351.8,108.0',
+      '455.7,88.0 490.3,108.0 490.3,148.0 455.7,168.0 421.1,148.0 421.1,108.0',
+      '490.3,148.0 525.0,168.0 525.0,208.0 490.3,228.0 455.7,208.0 455.7,168.0',
+    ],
+    filled: [
+      '490.3,28.0 525.0,48.0 525.0,88.0 490.3,108.0 455.7,88.0 455.7,48.0',
+      '421.1,148.0 455.7,168.0 455.7,208.0 421.1,228.0 386.4,208.0 386.4,168.0',
+    ],
+  },
+  'bottom-left': {
+    outline: [
+      '10.0,560.0 44.6,580.0 44.6,620.0 10.0,640.0 -24.6,620.0 -24.6,580.0',
+      '79.3,560.0 113.9,580.0 113.9,620.0 79.3,640.0 44.6,620.0 44.6,580.0',
+      '44.6,620.0 79.3,640.0 79.3,680.0 44.6,700.0 10.0,680.0 10.0,640.0',
+      '183.2,620.0 217.8,640.0 217.8,680.0 183.2,700.0 148.6,680.0 148.6,640.0',
+      '10.0,680.0 44.6,700.0 44.6,740.0 10.0,760.0 -24.6,740.0 -24.6,700.0',
+      '79.3,680.0 113.9,700.0 113.9,740.0 79.3,760.0 44.6,740.0 44.6,700.0',
+    ],
+    filled: [
+      '113.9,620.0 148.6,640.0 148.6,680.0 113.9,700.0 79.3,680.0 79.3,640.0',
+      '44.6,740.0 79.3,760.0 79.3,800.0 44.6,820.0 10.0,800.0 10.0,760.0',
+    ],
+  },
+};
+
+interface Props {
+  cluster: keyof typeof CLUSTERS;
+  strokeOpacity: number;
+  fillOpacity: number;
+  width: number;
+  height: number;
+  viewBox: string;
+  /** Flip vertically (projects page: the top-right cluster mirrored to the bottom-right). */
+  mirror?: boolean;
+  class?: string;
+}
+
+const { cluster, strokeOpacity, fillOpacity, width, height, viewBox, mirror = false, class: className } = Astro.props;
+const { outline, filled } = CLUSTERS[cluster];
+---
+
+<svg class:list={['honeycomb', className]} width={width} height={height} viewBox={viewBox} aria-hidden="true">
+  <g transform={mirror ? 'translate(0,796) scale(1,-1)' : undefined}>
+    <g stroke="currentColor" stroke-width="1.5" fill="none" stroke-opacity={strokeOpacity}>
+      {outline.map((points) => <polygon points={points}></polygon>)}
+    </g>
+    <g fill="currentColor" fill-opacity={fillOpacity}>
+      {filled.map((points) => <polygon points={points}></polygon>)}
+    </g>
+  </g>
+</svg>

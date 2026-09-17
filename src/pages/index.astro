@@ -1,0 +1,52 @@
+---
+import Frame from '../layouts/Frame.astro';
+import Emblem from '../components/Emblem.astro';
+import Honeycomb from '../components/Honeycomb.astro';
+import { site, githubUrl } from '../config/site';
+---
+
+<Frame title={site.name} page="index" divider>
+  <span slot="status">{site.location}</span>
+
+  <section class="lockup-panel">
+    <div class="lockup">
+      <Emblem size={72} class="lockup__emblem" />
+      <div class="lockup__lines">
+        <div class="lockup__line">
+          <span class="lockup__label">{site.role}</span>
+          <span class="lockup__rule"></span>
+        </div>
+        <div class="lockup__line lockup__line--dim">
+          <span class="lockup__label lockup__label--desktop">{site.tagline}</span>
+          <span class="lockup__label lockup__label--mobile">{site.taglineMobile}</span>
+          <span class="lockup__rule"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-field">
+      <Honeycomb class="honeycomb--mobile" cluster="top-right" strokeOpacity={0.26} fillOpacity={0.14} width={264} height={270} viewBox="280 -40 264 270" />
+    </div>
+
+    <div class="statement">
+      <p class="bio">{site.bio}</p>
+      <div class="links">
+        <a class="links__handle" href={githubUrl}>@{site.github}</a>
+        <a class="links__page" href="/about/">About →</a>
+        <a class="links__page" href="/projects/">Projects →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="field">
+    <Honeycomb class="honeycomb--top-right" cluster="top-right" strokeOpacity={0.28} fillOpacity={0.16} width={264} height={230} viewBox="280 0 264 230" />
+    <Honeycomb class="honeycomb--bottom-left" cluster="bottom-left" strokeOpacity={0.28} fillOpacity={0.16} width={220} height={238} viewBox="0 558 220 238" />
+    <svg class="crosshair" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
+      <g stroke="currentColor" stroke-width="1" stroke-opacity="0.6">
+        <line x1="14" y1="0" x2="14" y2="28"></line>
+        <line x1="0" y1="14" x2="28" y2="14"></line>
+      </g>
+    </svg>
+    <div class="coords">{site.coordinates}</div>
+  </section>
+</Frame>

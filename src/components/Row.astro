@@ -1,0 +1,19 @@
+---
+// One project row. Rendered with data at build time, and cloned empty from a
+// <template> by src/scripts/projects.ts when the list is refreshed in the browser.
+import type { Row } from '../lib/projects';
+
+type Props = Partial<Row>;
+
+const { no = '', name = '', desc = '', lang = '', stars = '', pushed = '', url = '#' } = Astro.props;
+---
+
+<a class="row" href={url}>
+  <span class="row__no">{no}</span>
+  <span class="row__name">{name}</span>
+  <span class="row__desc">{desc}</span>
+  <span class="row__lang">{lang}</span>
+  <span class="row__stars">{stars}</span>
+  <span class="row__pushed">{pushed}</span>
+  <span class="row__arrow" aria-hidden="true">→</span>
+</a>
