@@ -782,6 +782,37 @@ a:focus-visible {
 }
 
 /* ---------------------------------------------------------------------------
+   404 page
+   --------------------------------------------------------------------------- */
+.missing {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex-grow: 1;
+  min-width: 0;
+  padding: 32px;
+  overflow: hidden;
+}
+
+.missing__body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  max-width: 560px;
+}
+
+.missing__code {
+  margin: 0;
+  font-size: 96px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+}
+
+/* ---------------------------------------------------------------------------
    Very short viewports (landscape phones): let the frame grow and the page
    scroll instead of clipping the spine and panels.
    --------------------------------------------------------------------------- */
@@ -1012,6 +1043,15 @@ a:focus-visible {
   .about-panel {
     padding: 20px 16px;
     overflow: visible;
+  }
+
+  /* 404 */
+  .missing {
+    padding: 20px 16px;
+  }
+
+  .missing__code {
+    font-size: 64px;
   }
 
   .about {

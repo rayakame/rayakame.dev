@@ -21,7 +21,12 @@ const inline = (text: string) =>
   });
 ---
 
-<Frame title={`About · ${site.name}`} page="about" divider>
+<Frame
+  title={`About · ${site.name}`}
+  description={`About ${site.name}: profile, current work, stack and self-hosted services.`}
+  page="about"
+  divider
+>
   <span slot="status">
     {site.location}
     <span class="status__clock" data-clock={about.timeZone}></span>

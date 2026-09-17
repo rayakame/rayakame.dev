@@ -5,7 +5,7 @@ import Honeycomb from '../components/Honeycomb.astro';
 import { site, githubUrl } from '../config/site';
 ---
 
-<Frame title={site.name} page="index" divider>
+<Frame title={site.name} description={site.bio} page="index" divider>
   <span slot="status">{site.location}</span>
 
   <section class="lockup-panel">

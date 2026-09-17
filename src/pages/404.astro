@@ -1,0 +1,40 @@
+---
+import Frame from '../layouts/Frame.astro';
+import Honeycomb from '../components/Honeycomb.astro';
+import { site } from '../config/site';
+---
+
+<Frame title={`404 · ${site.name}`} description="Page not found." page="none">
+  <span slot="status">404 · Not found</span>
+
+  <section class="missing">
+    <Honeycomb
+      class="honeycomb--list"
+      cluster="top-right"
+      mirror
+      strokeOpacity={0.18}
+      fillOpacity={0.1}
+      width={264}
+      height={230}
+      viewBox="280 566 264 230"
+    />
+    <div class="missing__body">
+      <h1 class="missing__code">404</h1>
+      <div class="lockup__line">
+        <span class="lockup__label">Nothing at this address</span>
+        <span class="lockup__rule"></span>
+      </div>
+      <div class="links">
+        <a class="links__page" href="/">
+          Index →
+        </a>
+        <a class="links__page" href="/about/">
+          About →
+        </a>
+        <a class="links__page" href="/projects/">
+          Projects →
+        </a>
+      </div>
+    </div>
+  </section>
+</Frame>

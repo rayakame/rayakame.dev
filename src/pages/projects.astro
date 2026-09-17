@@ -28,7 +28,11 @@ const rows = toRows(projects);
 const count = String(rows.length).padStart(2, '0');
 ---
 
-<Frame title={`Projects · ${site.name}`} page="projects">
+<Frame
+  title={`Projects · ${site.name}`}
+  description={`Open source projects by ${site.name}, with live data from GitHub.`}
+  page="projects"
+>
   <span slot="status">
     <span data-repo-count>{count}</span> repositories · GitHub
   </span>

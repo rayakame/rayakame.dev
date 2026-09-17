@@ -8,12 +8,28 @@ import '../styles/site.css';
 
 interface Props {
   title: string;
-  page: 'index' | 'projects' | 'about';
+  /** One sentence for search engines and link previews. */
+  description: string;
+  page: 'index' | 'projects' | 'about' | 'none';
   /** Also place registration marks on the panel divider (index page). */
   divider?: boolean;
 }
 
-const { title, page, divider = false } = Astro.props;
+const { title, description, page, divider = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL('/og.png', Astro.site);
+const csp = [
+  "default-src 'self'",
+  "script-src 'self'",
+  "style-src 'self'",
+  "img-src 'self' data:",
+  "font-src 'self'",
+  "connect-src 'self' https://api.github.com https://api.open-meteo.com",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'none'",
+  'upgrade-insecure-requests',
+].join('; ');
 const marks = ['spine-top', 'spine-bottom', ...(divider ? ['divider-top', 'divider-bottom'] : [])];
 const fonts = [
   ...['300', '400', '500'].map((weight) => `/fonts/martian-mono-latin-${weight}-normal.woff2`),
@@ -26,9 +42,26 @@ const fonts = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Security-Policy" content={csp} />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <meta name="theme-color" content="#050505" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
     {fonts.map((href) => (
       <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />
     ))}
