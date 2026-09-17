@@ -11,7 +11,7 @@ export default defineConfig(
   tseslint.configs.recommended,
   astro.configs.recommended,
   {
-    files: ['src/scripts/**/*.ts', 'src/pages/**/*.astro'],
+    files: ['src/scripts/**/*.ts', 'src/pages/**/*.astro', 'public/**/*.js'],
     languageOptions: { globals: globals.browser },
   },
   {
