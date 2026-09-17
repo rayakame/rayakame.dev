@@ -54,10 +54,14 @@ const { outline, filled } = CLUSTERS[cluster];
 <svg class:list={['honeycomb', className]} width={width} height={height} viewBox={viewBox} aria-hidden="true">
   <g transform={mirror ? 'translate(0,796) scale(1,-1)' : undefined}>
     <g stroke="currentColor" stroke-width="1.5" fill="none" stroke-opacity={strokeOpacity}>
-      {outline.map((points) => <polygon points={points}></polygon>)}
+      {outline.map((points) => (
+        <polygon points={points}></polygon>
+      ))}
     </g>
     <g fill="currentColor" fill-opacity={fillOpacity}>
-      {filled.map((points) => <polygon points={points}></polygon>)}
+      {filled.map((points) => (
+        <polygon points={points}></polygon>
+      ))}
     </g>
   </g>
 </svg>

@@ -31,8 +31,7 @@ interface ProjectFields {
  * `name` and `url` are required.
  */
 export type ProjectConfig =
-  | ({ repo: string } & ProjectFields)
-  | ({ repo?: undefined; name: string; url: string } & ProjectFields);
+  ({ repo: string } & ProjectFields) | ({ repo?: undefined; name: string; url: string } & ProjectFields);
 
 export interface ProjectsConfig {
   /** Default owner for `repo` entries written without one. */
@@ -68,13 +67,15 @@ const API = 'https://api.github.com';
 const DASH = '—';
 
 const clean = (repo: string): string => repo.trim().replace(/\/+$/, '');
-const fullName = (repo: string, user: string): string => (clean(repo).includes('/') ? clean(repo) : `${user}/${clean(repo)}`);
+const fullName = (repo: string, user: string): string =>
+  clean(repo).includes('/') ? clean(repo) : `${user}/${clean(repo)}`;
 const repoName = (full: string): string => full.split('/').pop() ?? full;
 const key = (full: string): string => full.toLowerCase();
 
 /** Only fetch when a displayable field is missing from the config. */
 const needsFetch = (p: ProjectConfig): boolean =>
-  p.repo !== undefined && (p.desc === undefined || p.lang === undefined || p.stars === undefined || p.pushed === undefined);
+  p.repo !== undefined &&
+  (p.desc === undefined || p.lang === undefined || p.stars === undefined || p.pushed === undefined);
 
 /** Full names of every configured repository that needs data from GitHub, in config order. */
 export function wantedRepos(config: ProjectsConfig): string[] {
@@ -82,7 +83,14 @@ export function wantedRepos(config: ProjectsConfig): string[] {
 }
 
 function fromGitHub(r: GitHubRepo): Project {
-  return { name: r.name, url: r.html_url, desc: r.description, lang: r.language, stars: r.stargazers_count, pushed: r.pushed_at };
+  return {
+    name: r.name,
+    url: r.html_url,
+    desc: r.description,
+    lang: r.language,
+    stars: r.stargazers_count,
+    pushed: r.pushed_at,
+  };
 }
 
 /**

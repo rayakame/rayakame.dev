@@ -16,7 +16,9 @@ try {
   const token: string | undefined = import.meta.env.GITHUB_TOKEN;
   const data = await fetchGitHubData(projectsConfig, { token, strict: ci });
   projects = resolveProjects(projectsConfig, data);
-  console.log(`[projects] ${projects.length} projects, ${Object.keys(data).length} with data from GitHub${token ? ' (authenticated)' : ''}`);
+  console.log(
+    `[projects] ${projects.length} projects, ${Object.keys(data).length} with data from GitHub${token ? ' (authenticated)' : ''}`,
+  );
 } catch (err) {
   if (ci) throw err;
   console.warn('[projects] GitHub fetch failed at build time, rendering MANUAL + PINNED only:', err);
@@ -27,27 +29,57 @@ const count = String(rows.length).padStart(2, '0');
 ---
 
 <Frame title={`Projects · ${site.name}`} page="projects">
-  <span slot="status"><span data-repo-count>{count}</span> repositories · GitHub</span>
+  <span slot="status">
+    <span data-repo-count>{count}</span> repositories · GitHub
+  </span>
 
   <section class="list-panel">
-    <Honeycomb class="honeycomb--list" cluster="top-right" mirror strokeOpacity={0.18} fillOpacity={0.1} width={264} height={230} viewBox="280 566 264 230" />
+    <Honeycomb
+      class="honeycomb--list"
+      cluster="top-right"
+      mirror
+      strokeOpacity={0.18}
+      fillOpacity={0.1}
+      width={264}
+      height={230}
+      viewBox="280 566 264 230"
+    />
 
     <div class="list-head">
-      <button class="list-head__no list-head__sort" type="button" data-sort="no" aria-pressed="true" data-dir="asc">No</button>
-      <button class="list-head__name list-head__sort" type="button" data-sort="name">Name</button>
+      <button class="list-head__no list-head__sort" type="button" data-sort="no" aria-pressed="true" data-dir="asc">
+        No
+      </button>
+      <button class="list-head__name list-head__sort" type="button" data-sort="name">
+        Name
+      </button>
       <span class="list-head__desc">Description</span>
-      <button class="list-head__lang list-head__sort" type="button" data-sort="lang">Lang</button>
-      <button class="list-head__stars list-head__sort" type="button" data-sort="stars">Stars</button>
-      <button class="list-head__pushed list-head__sort" type="button" data-sort="pushed">Pushed</button>
+      <button class="list-head__lang list-head__sort" type="button" data-sort="lang">
+        Lang
+      </button>
+      <button class="list-head__stars list-head__sort" type="button" data-sort="stars">
+        Stars
+      </button>
+      <button class="list-head__pushed list-head__sort" type="button" data-sort="pushed">
+        Pushed
+      </button>
       <span class="list-head__arrow"></span>
     </div>
 
     <div class="list" data-projects>
-      {rows.map((row) => <Row {...row} />)}
+      {rows.map((row) => (
+        <Row {...row} />
+      ))}
     </div>
 
-    <template id="row-template"><Row /></template>
-    <script type="application/json" id="projects-json" is:inline set:html={JSON.stringify(rows).replace(/</g, '\\u003c')} />
+    <template id="row-template">
+      <Row />
+    </template>
+    <script
+      type="application/json"
+      id="projects-json"
+      is:inline
+      set:html={JSON.stringify(rows).replace(/</g, '\\u003c')}
+    ></script>
     <script src="../scripts/projects.ts"></script>
   </section>
 </Frame>

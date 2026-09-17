@@ -18,7 +18,23 @@ export const about = {
   ],
 
   /** 03 · Stack: tools I reach for. */
-  stack: ['Go', 'Python', 'C', 'C++', 'Lua', 'TypeScript', 'PostgreSQL', 'sqlc', 'Docker', 'Linux', 'Caddy', 'Grafana', 'ESP-IDF', 'Git', 'Proxmox'],
+  stack: [
+    'Go',
+    'Python',
+    'C',
+    'C++',
+    'Lua',
+    'TypeScript',
+    'PostgreSQL',
+    'sqlc',
+    'Docker',
+    'Linux',
+    'Caddy',
+    'Grafana',
+    'ESP-IDF',
+    'Git',
+    'Proxmox',
+  ],
 
   /** 04 · Self-hosted: what runs at home. */
   selfHosted: ['Grafana', 'Home Assistant', 'Caddy', 'AdGuard Home', 'Uptime Kuma', 'File server'],
@@ -38,5 +54,5 @@ export const about = {
   /** Uptime counts the days since this date (ISO), e.g. the last reboot of the home server. */
   uptimeSince: '2026-09-16',
   /** Current weather from Open-Meteo (no API key) for these coordinates. */
-  weather: { latitude: 48.10, longitude: 11.53 },
+  weather: { latitude: 48.1, longitude: 11.53 },
 };
