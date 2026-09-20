@@ -18,18 +18,25 @@ interface Props {
 const { title, description, page, divider = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL('/og.png', Astro.site);
+// `astro dev` serves styles and the HMR client inline, which a bare 'self'
+// policy drops on the floor -- the dev page renders unstyled. The build emits
+// every script and stylesheet as its own file (see astro.config.mjs), so the
+// policy that actually ships stays strict.
+const dev = import.meta.env.DEV;
 const csp = [
   "default-src 'self'",
-  "script-src 'self'",
-  "style-src 'self'",
+  `script-src 'self'${dev ? " 'unsafe-inline'" : ''}`,
+  `style-src 'self'${dev ? " 'unsafe-inline'" : ''}`,
   "img-src 'self' data:",
   "font-src 'self'",
-  "connect-src 'self' https://api.github.com https://api.open-meteo.com",
+  `connect-src 'self'${dev ? ' ws:' : ''} https://api.github.com https://api.open-meteo.com`,
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'none'",
-  'upgrade-insecure-requests',
+  // Would rewrite http://<lan-ip>:4321 asset URLs to https during dev.
+  ...(dev ? [] : ['upgrade-insecure-requests']),
 ].join('; ');
+const footerContacts = site.contacts.filter((c) => c.footer);
 const marks = ['spine-top', 'spine-bottom', ...(divider ? ['divider-top', 'divider-bottom'] : [])];
 const fonts = [
   ...['300', '400', '500'].map((weight) => `/fonts/martian-mono-latin-${weight}-normal.woff2`),
@@ -38,7 +45,7 @@ const fonts = [
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme={site.theme === 'default' ? undefined : site.theme}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -62,7 +69,6 @@ const fonts = [
     <meta name="theme-color" content="#050505" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <script is:inline src="/theme.js"></script>
     {fonts.map((href) => (
       <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />
     ))}
@@ -104,16 +110,13 @@ const fonts = [
 
         <footer class="bottombar">
           <div class="bottombar__links">
-            {site.contacts.map((c) => (
+            {footerContacts.map((c) => (
               <a class="bottombar__link" href={c.href}>
                 {c.label}
               </a>
             ))}
           </div>
           <div class="bottombar__right">
-            <button class="bottombar__link theme-toggle" type="button" data-theme-toggle aria-pressed="false">
-              Theme
-            </button>
             <span>© {site.year}</span>
           </div>
         </footer>

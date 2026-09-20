@@ -9,7 +9,8 @@ const sections = [
   { no: '02', title: 'Now' },
   { no: '03', title: 'Stack' },
   { no: '04', title: 'Self-hosted' },
-  { no: '05', title: 'Specs' },
+  { no: '05', title: 'Contact' },
+  { no: '06', title: 'Specs' },
 ];
 const head = (i: number) => sections[i];
 
@@ -91,10 +92,28 @@ const inline = (text: string) =>
         </ul>
       </article>
 
-      <article class="section section--specs">
+      <article class="section">
         <h2 class="section__head">
           <span class="section__no">{head(4).no}</span>
           <span class="section__title">{head(4).title}</span>
+          <span class="section__rule"></span>
+        </h2>
+        <ul class="contacts">
+          {site.contacts.map((c) => (
+            <li class="contact">
+              <span class="contact__key">{c.label}</span>
+              <a class="contact__val" href={c.href}>
+                {c.handle}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </article>
+
+      <article class="section section--specs">
+        <h2 class="section__head">
+          <span class="section__no">{head(5).no}</span>
+          <span class="section__title">{head(5).title}</span>
           <span class="section__rule"></span>
         </h2>
         <dl class="readout readout--inline">
@@ -142,7 +161,7 @@ const inline = (text: string) =>
     />
     <div class="hud">
       <div class="hud__label">
-        {head(4).no} · {head(4).title}
+        {head(5).no} · {head(5).title}
       </div>
       <dl class="readout">
         <dt class="readout__key">Local time</dt>
