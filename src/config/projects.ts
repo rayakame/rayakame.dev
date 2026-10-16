@@ -20,6 +20,7 @@ export const PROJECTS: ProjectConfig[] = [
   { repo: 'sqlc-gen-better-python', lang: 'Go & Python' },
   { repo: 'sqlc-bin' },
   { repo: 'radixly', url: 'https://radixly.rayakame.dev', lang: 'C & Python' },
+  { repo: 'akari', lang: 'Rust & Swift' },
   { repo: 'hikari-risa' },
   { repo: 'roomsense' },
 ];
