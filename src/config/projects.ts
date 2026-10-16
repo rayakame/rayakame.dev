@@ -22,7 +22,6 @@ export const PROJECTS: ProjectConfig[] = [
   { repo: 'radixly', url: 'https://radixly.rayakame.dev', lang: 'C & Python' },
   { repo: 'hikari-risa' },
   { repo: 'roomsense' },
-  // { name: 'act-backend', url: 'https://…', desc: 'Go/Fiber backend for a fitness social app.', lang: 'Go' },
 ];
 
 export const projectsConfig: ProjectsConfig = { user: GITHUB_USER, projects: PROJECTS };

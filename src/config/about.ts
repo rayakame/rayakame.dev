@@ -1,5 +1,4 @@
-// Content of the About page. Everything here is filler to be rewritten; the
-// structure (numbered sections) is what the page lays out.
+// Content of the About page.
 
 export const about = {
   /** 01 · Profile: short paragraphs. Links are written as [text](url). */
@@ -41,15 +40,14 @@ export const about = {
 
   /**
    * Spec readout (right panel on desktop, last section elsewhere). Static rows;
-   * local time, uptime and weather are added live below them.
+   * local time and timezone are added live above them, uptime and weather below.
    */
   specs: [
-    { key: 'Timezone', value: 'UTC+02' },
     { key: 'OS', value: 'CachyOS' },
     { key: 'Editor', value: 'JetBrains' },
     { key: 'Shell', value: 'fish' },
   ],
-  /** IANA time zone for the live clock. */
+  /** IANA time zone for the live clock and the timezone row. */
   timeZone: 'Europe/Berlin',
   /** Uptime counts the days since this date (ISO), e.g. the last reboot of the home server. */
   uptimeSince: '2026-09-16',

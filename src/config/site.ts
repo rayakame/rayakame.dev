@@ -47,8 +47,8 @@ const contacts: Contact[] = [
 export const site = {
   /** Written vertically in the spine and used in the page titles. */
   name: 'Christopher',
-  /** Shown in the spine and in the footer copyright. */
-  year: 2026,
+  /** Shown in the spine and in the footer copyright. Build year; the daily deploy rolls it over. */
+  year: new Date().getFullYear(),
 
   /**
    * Accent palette, baked in at build time as `data-theme` on <html>. There is

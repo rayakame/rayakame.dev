@@ -3,6 +3,7 @@ import Frame from '../layouts/Frame.astro';
 import Honeycomb from '../components/Honeycomb.astro';
 import { about } from '../config/about';
 import { site } from '../config/site';
+import { utcOffset } from '../lib/time';
 
 const sections = [
   { no: '01', title: 'Profile' },
@@ -121,6 +122,10 @@ const inline = (text: string) =>
           <dd class="readout__val" data-clock={about.timeZone} data-seconds>
             —
           </dd>
+          <dt class="readout__key">Timezone</dt>
+          <dd class="readout__val" data-offset={about.timeZone}>
+            {utcOffset(about.timeZone)}
+          </dd>
           {about.specs.map((s) => (
             <>
               <dt class="readout__key">{s.key}</dt>
@@ -168,6 +173,10 @@ const inline = (text: string) =>
         <dd class="readout__val" data-clock={about.timeZone} data-seconds>
           —
         </dd>
+        <dt class="readout__key">Timezone</dt>
+        <dd class="readout__val" data-offset={about.timeZone}>
+          {utcOffset(about.timeZone)}
+        </dd>
         {about.specs.map((s) => (
           <>
             <dt class="readout__key">{s.key}</dt>
@@ -190,6 +199,7 @@ const inline = (text: string) =>
 
 <script>
   import { about } from '../config/about';
+  import { utcOffset } from '../lib/time';
 
   // Live local time for every [data-clock] element (time zone in the attribute).
   const clocks = [...document.querySelectorAll<HTMLElement>('[data-clock]')];
@@ -209,6 +219,11 @@ const inline = (text: string) =>
   if (clocks.length) {
     tick();
     setInterval(tick, 1000);
+  }
+
+  // The build-time offset goes stale when DST starts or ends before the next deploy.
+  for (const el of document.querySelectorAll<HTMLElement>('[data-offset]')) {
+    el.textContent = utcOffset(el.dataset.offset ?? about.timeZone);
   }
 
   // Uptime: whole days since the configured date.
