@@ -21,6 +21,7 @@ export const PROJECTS: ProjectConfig[] = [
   { repo: 'sqlc-bin' },
   { repo: 'radixly', url: 'https://radixly.rayakame.dev', lang: 'C & Python' },
   { repo: 'akari', lang: 'Rust & Swift' },
+  { repo: 'quizpilot', url: 'https://quizpilot.rayakame.dev/' },
   { repo: 'hikari-risa' },
   { repo: 'roomsense' },
 ];
