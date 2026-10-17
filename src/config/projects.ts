@@ -17,7 +17,7 @@ export const GITHUB_USER = site.github;
 
 export const PROJECTS: ProjectConfig[] = [
   { repo: 'hikari-py/hikari' },
-  { repo: 'sqlc-gen-better-python', lang: 'Go & Python' },
+  { repo: 'sqlc-gen-better-python', url: 'https://sqlc-gen-better-python.rayakame.dev/', lang: 'Go & Python' },
   { repo: 'sqlc-bin' },
   { repo: 'radixly', url: 'https://radixly.rayakame.dev', lang: 'C & Python' },
   { repo: 'akari', lang: 'Rust & Swift' },
