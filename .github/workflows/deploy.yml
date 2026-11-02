@@ -19,6 +19,8 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: withastro/action@v6
+        with:
+          node-version: 26
         env:
           # Raises the GitHub API limit for the build-time project fetch.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
