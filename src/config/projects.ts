@@ -22,7 +22,7 @@ export const PROJECTS: ProjectConfig[] = [
   { repo: 'radixly', url: 'https://radixly.rayakame.dev', lang: 'C & Python' },
   { repo: 'akari', lang: 'Rust & Swift' },
   { repo: 'quizpilot', url: 'https://quizpilot.rayakame.dev/' },
-  { repo: 'hikari-risa' },
+  { repo: 'hikari-risa', url: 'https://hikari-risa.rayakame.dev/' },
   { repo: 'roomsense' },
 ];
 
