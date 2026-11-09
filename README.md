@@ -7,6 +7,7 @@ Personal site of Christopher, built with [Astro](https://astro.build) and deploy
 - `/` — index with the lockup and a short bio
 - `/about/` — profile, current work, stack, self-hosted services and a live spec readout
 - `/projects/` — configured projects, with missing fields filled from the GitHub API at build time and refreshed in the browser
+- `/og.png` — link preview image, rendered at build time from `site.ts` and the theme (`src/lib/og.ts`)
 
 ## Configuration
 
