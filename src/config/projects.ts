@@ -18,11 +18,11 @@ export const GITHUB_USER = site.github;
 export const PROJECTS: ProjectConfig[] = [
   { repo: 'hikari-py/hikari' },
   { repo: 'sqlc-gen-better-python', url: 'https://sqlc-gen-better-python.rayakame.dev/', lang: 'Go & Python' },
-  { repo: 'sqlc-bin' },
+  { repo: 'hikari-risa', url: 'https://hikari-risa.rayakame.dev/' },
   { repo: 'radixly', url: 'https://radixly.rayakame.dev', lang: 'C & Python' },
   { repo: 'akari', lang: 'Rust & Swift' },
   { repo: 'quizpilot', url: 'https://quizpilot.rayakame.dev/' },
-  { repo: 'hikari-risa', url: 'https://hikari-risa.rayakame.dev/' },
+  { repo: 'sqlc-bin' },
   { repo: 'roomsense' },
 ];
 
