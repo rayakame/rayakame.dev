@@ -3,7 +3,7 @@ import Frame from '../layouts/Frame.astro';
 import Honeycomb from '../components/Honeycomb.astro';
 import Row from '../components/Row.astro';
 import { projectsConfig } from '../config/projects';
-import { site } from '../config/site';
+import { site, brand } from '../config/site';
 import { fallbackProjects, fetchGitHubData, resolveProjects, toRows } from '../lib/projects';
 
 // Rows are rendered at build time (a GITHUB_TOKEN raises the API limit in CI)
@@ -29,7 +29,7 @@ const count = String(rows.length).padStart(2, '0');
 ---
 
 <Frame
-  title={`Projects · ${site.name}`}
+  title={`Projects · ${brand}`}
   description={`Open source projects by ${site.name}, with live data from GitHub.`}
   page="projects"
 >

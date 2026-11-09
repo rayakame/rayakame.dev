@@ -2,10 +2,10 @@
 import Frame from '../layouts/Frame.astro';
 import Emblem from '../components/Emblem.astro';
 import Honeycomb from '../components/Honeycomb.astro';
-import { site, githubUrl } from '../config/site';
+import { site, githubUrl, brand } from '../config/site';
 ---
 
-<Frame title={site.name} description={site.bio} page="index" divider>
+<Frame title={`${brand} · ${site.role}`} description={site.bio} page="index" divider>
   <span slot="status">{site.location}</span>
 
   <section class="lockup-panel">

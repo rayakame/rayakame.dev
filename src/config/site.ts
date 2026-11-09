@@ -77,3 +77,6 @@ export const site = {
 };
 
 export const githubUrl = `https://github.com/${site.github}`;
+
+/** Name plus handle, for page titles: people search for either. */
+export const brand = `${site.name} (${site.github})`;

@@ -1,10 +1,10 @@
 ---
 import Frame from '../layouts/Frame.astro';
 import Honeycomb from '../components/Honeycomb.astro';
-import { site } from '../config/site';
+import { brand } from '../config/site';
 ---
 
-<Frame title={`404 · ${site.name}`} description="Page not found." page="none">
+<Frame title={`404 · ${brand}`} description="Page not found." page="none">
   <span slot="status">404 · Not found</span>
 
   <section class="missing">

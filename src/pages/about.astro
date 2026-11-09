@@ -2,7 +2,7 @@
 import Frame from '../layouts/Frame.astro';
 import Honeycomb from '../components/Honeycomb.astro';
 import { about } from '../config/about';
-import { site } from '../config/site';
+import { site, brand } from '../config/site';
 import { utcOffset } from '../lib/time';
 
 const sections = [
@@ -24,7 +24,7 @@ const inline = (text: string) =>
 ---
 
 <Frame
-  title={`About · ${site.name}`}
+  title={`About · ${brand}`}
   description={`About ${site.name}: profile, current work, stack and self-hosted services.`}
   page="about"
   divider
